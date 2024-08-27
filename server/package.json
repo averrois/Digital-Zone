@@ -2,12 +2,16 @@
   "name": "digitalzone-server",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "format": "prettier --write ."
+  },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/mongoose": "^5.11.97"
+    "@types/mongoose": "^5.11.97",
+    "prettier": "^3.3.3"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
