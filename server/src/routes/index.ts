@@ -3,6 +3,6 @@ import serviceRoutes from './serviceRoutes';
 
 const appRoutes = Router();
 
-appRoutes.get('/services', serviceRoutes);
+appRoutes.use('/services', serviceRoutes);
 
 export default appRoutes;
