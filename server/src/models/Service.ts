@@ -1,23 +1,28 @@
-import mongoose from 'mongoose';
-import { randomUUID } from 'crypto';
+import mongoose from "mongoose"
+import type { ServiceType } from "../types"
 
-interface IService extends mongoose.Document {
-  id: string;
-  title: string;
-  content: string;
-}
+interface IService extends mongoose.Document, ServiceType {}
 
-export const serviceSchema: mongoose.Schema<IService> = new mongoose.Schema({
-  id: {
-    type: String,
-    default: randomUUID(),
+const serviceSchema = new mongoose.Schema<IService>(
+  {
+    title: {
+      type: String,
+      required: [true, "Title is required"],
+      trim: true,
+      maxlength: [100, "Title cannot be more than 100 characters"],
+    },
+    content: {
+      type: String,
+      required: [true, "Content is required"],
+      trim: true,
+    },
   },
-  title: {
-    type: String,
-    required: true,
+  {
+    timestamps: true,
   },
-  content: {
-    type: String,
-    required: true,
-  },
-});
+)
+
+// Export model
+const Service = mongoose.model<IService>("Service", serviceSchema)
+
+export default Service
