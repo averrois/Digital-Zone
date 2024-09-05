@@ -1,4 +1,4 @@
-import app from './app';
+import app from './src/app';
 import { connectToDB } from './src/config/database.ts';
 import dotenv from 'dotenv';
 
