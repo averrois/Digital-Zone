@@ -1,10 +1,10 @@
-import mongoose from "mongoose"
-import { randomUUID } from "crypto"
+import mongoose from 'mongoose';
+import { randomUUID } from 'crypto';
 
 interface IService extends mongoose.Document {
-  id: string
-  title: string
-  content: string
+  id: string;
+  title: string;
+  content: string;
 }
 
 export const serviceSchema: mongoose.Schema<IService> = new mongoose.Schema({
@@ -20,4 +20,4 @@ export const serviceSchema: mongoose.Schema<IService> = new mongoose.Schema({
     type: String,
     required: true,
   },
-})
+});

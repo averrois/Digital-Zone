@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express';
 // import cors from "cors";
 // import morgan from "morgan";
 // import appRouter from "./routers";
 // import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: '../.env' });
 
 const app = express();
 
