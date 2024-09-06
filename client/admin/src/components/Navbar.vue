@@ -37,9 +37,7 @@ const toggleMenu = () => {
       >
         <div class="flex flex-col md:mx-6 md:flex-row">
           <a class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" href="#">Home</a>
-          <a class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" href="#">Shop</a>
-          <a class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" href="#">Contact</a>
-          <a class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" href="#">About</a>
+          <a class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" href="#">Services</a>
         </div>
       </div>
     </div>
