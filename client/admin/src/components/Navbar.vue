@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from "vue"
-
+import { RouterLink } from "vue-router";
 const isOpen = ref(false)
 
 const toggleMenu = () => {
@@ -36,8 +36,8 @@ const toggleMenu = () => {
         class="absolute inset-x-0 z-20 w-full bg-white px-6 py-4 transition-all duration-300 ease-in-out md:relative md:top-0 md:mt-0 md:flex md:w-auto md:translate-x-0 md:items-center md:bg-transparent md:p-0 md:opacity-100"
       >
         <div class="flex flex-col md:mx-6 md:flex-row">
-          <a class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" href="#">Home</a>
-          <a class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" href="#">Services</a>
+          <RouterLink name="Home-Link" class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" to="/">Home</RouterLink>
+          <RouterLink name="Service-Link"  class="my-2 transform text-gray-700 transition-colors duration-300 hover:text-blue-500 md:mx-4 md:my-0" to="/services">Services</RouterLink>
         </div>
       </div>
     </div>
