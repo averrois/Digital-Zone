@@ -1,3 +1,5 @@
 <template>
-  <h2 class="text-3xl font-bold tet-blue-500">Hi From admin panel</h2>
+  <div class="container  mx-auto px-6 py-4">
+    <h2 class="text-3xl font-medium text-blue-500">Admin Panel</h2>
+  </div>
 </template>
