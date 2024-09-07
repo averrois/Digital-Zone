@@ -1,3 +1,11 @@
+<script setup lang="ts">
+defineProps<{
+  id: string,
+  title: string
+  description: string
+}>()
+</script>
+
 <template>
   <div class="relative p-4 bg-white shadow-xl rounded-xl">
     <!-- Image -->
@@ -11,9 +19,8 @@
 
     <!-- Content -->
     <div class="mt-5 text-center">
-      <h3 class="text-lg font-medium text-gray-800">Blog post published</h3>
-
-      <p class="mt-2 text-gray-500">This blog post has been published. Team members will be able to edit this post.</p>
+      <h3 class="text-lg font-medium text-gray-800">{{ title }}</h3>
+      <p class="mt-2 text-gray-500">{{ description }}</p>
     </div>
 
     <!-- Buttons -->
