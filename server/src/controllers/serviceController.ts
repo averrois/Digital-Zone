@@ -25,26 +25,52 @@ export const getServiceById = async (id: string): Promise<ServiceType | null> =>
 };
 
 // Update Service
-export const updateService = async (id: string, serviceData: Partial<ServiceType>): Promise<ServiceType | null> => {
-  try {
-    const updatedService = await Service.findByIdAndUpdate(id, serviceData, { new: true, runValidators: true });
-    return updatedService;
-  } catch (err: any) {
-    console.log("Error occurred while updating service", err?.message);
-    return null;
-  }
-};
+// export const updateService = async (id: string, serviceData: ServiceType): Promise<ServiceType | null> => {
+//   try {
+//     const updatedService = await Service.findByIdAndUpdate(id, serviceData, { new: true, runValidators: true });
+//     return updatedService;
+//   } catch (err: any) {
+//     console.log("Error occurred while updating service", err?.message);
+//     return null;
+//   }
+// };
 
-// Delete Service
+// // Delete Service
+// export const deleteService = async (id: string): Promise<boolean> => {
+//   try {
+//     const result = await Service.findByIdAndDelete(id);
+//     return result !== null;
+//   } catch (err: any) {
+//     console.log("Error occurred while deleting service", err?.message);
+//     return false;
+//   }
+// };
+
+export const updateService = async (id: string, serviceData: ServiceType): Promise<ServiceType | null> => {
+  try {
+    const service = await Service.findByIdAndUpdate(id, serviceData, { new: true })
+    if (!service) {
+      throw new Error('Service not found')
+    }
+    return service
+  } catch (error) {
+    console.error("Error updating service:", error)
+    throw error
+  }
+}
+
 export const deleteService = async (id: string): Promise<boolean> => {
   try {
-    const result = await Service.findByIdAndDelete(id);
-    return result !== null;
-  } catch (err: any) {
-    console.log("Error occurred while deleting service", err?.message);
-    return false;
+    const service = await Service.findByIdAndDelete(id)
+    if (!service) {
+      throw new Error('Service not found')
+    }
+    return true
+  } catch (error) {
+    console.error("Error deleting service:", error)
+    throw error
   }
-};
+}
 
 // Create Service
 export const createService = async (serviceData: ServiceType): Promise<ServiceType | null> => {
