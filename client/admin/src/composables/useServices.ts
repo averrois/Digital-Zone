@@ -1,6 +1,7 @@
+import axios from "axios"
 import { ref } from "vue"
 import type { Ref } from "vue"
-import type { ServiceType } from "../types"
+import type { ServiceType } from "@/types"
 
 const BASE_URL = "/api/v1"
 
@@ -11,7 +12,7 @@ interface UseServicesReturn {
   getServices: () => Promise<void>
   getServiceById: (id: string) => Promise<ServiceType | null>
   createService: (service: Omit<ServiceType, "_id">) => Promise<ServiceType | null>
-  updateService: (id: string, service: Partial<ServiceType>) => Promise<ServiceType | null>
+  updateService: (id: string, service: ServiceType) => Promise<ServiceType | null>
   deleteService: (id: string) => Promise<boolean>
 }
 
@@ -22,14 +23,13 @@ export function useServices(): UseServicesReturn {
 
   const handleError = (e: unknown) => {
     console.error(e)
-    error.value = e instanceof Error ? e.message : "An unknown error occurred"
+    error.value = axios.isAxiosError(e) ? e.message : "An unknown error occurred"
   }
 
-  const fetchWithErrorHandling = async (url: string, options?: RequestInit) => {
+  const axiosWithErrorHandling = async <T>(config: any): Promise<T | null> => {
     try {
-      const response = await fetch(url, options)
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`)
-      return await response.json()
+      const response = await axios(config)
+      return response.data
     } catch (e) {
       handleError(e)
       return null
@@ -40,7 +40,10 @@ export function useServices(): UseServicesReturn {
     loading.value = true
     error.value = null
     try {
-      const data = await fetchWithErrorHandling(`${BASE_URL}/services`)
+      const data = await axiosWithErrorHandling<ServiceType[]>({
+        method: "get",
+        url: `${BASE_URL}/services`,
+      })
       if (data) services.value = data
     } finally {
       loading.value = false
@@ -51,7 +54,10 @@ export function useServices(): UseServicesReturn {
     loading.value = true
     error.value = null
     try {
-      return await fetchWithErrorHandling(`${BASE_URL}/services/${id}`)
+      return await axiosWithErrorHandling<ServiceType>({
+        method: "get",
+        url: `${BASE_URL}/services/${id}`,
+      })
     } finally {
       loading.value = false
     }
@@ -61,10 +67,10 @@ export function useServices(): UseServicesReturn {
     loading.value = true
     error.value = null
     try {
-      const newService = await fetchWithErrorHandling(`${BASE_URL}/services`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(service),
+      const newService = await axiosWithErrorHandling<ServiceType>({
+        method: "post",
+        url: `${BASE_URL}/services`,
+        data: service,
       })
       if (newService) services.value.push(newService)
       return newService
@@ -73,14 +79,14 @@ export function useServices(): UseServicesReturn {
     }
   }
 
-  const updateService = async (id: string, service: Partial<ServiceType>): Promise<ServiceType | null> => {
+  const updateService = async (id: string, service: ServiceType): Promise<ServiceType | null> => {
     loading.value = true
     error.value = null
     try {
-      const updatedService = await fetchWithErrorHandling(`${BASE_URL}/services/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(service),
+      const updatedService = await axiosWithErrorHandling<ServiceType>({
+        method: "put",
+        url: `${BASE_URL}/services/${id}`,
+        data: service,
       })
       if (updatedService) {
         const index = services.value.findIndex((s) => s._id === id)
@@ -96,8 +102,9 @@ export function useServices(): UseServicesReturn {
     loading.value = true
     error.value = null
     try {
-      const result = await fetchWithErrorHandling(`${BASE_URL}/services/${id}`, {
-        method: "DELETE",
+      const result = await axiosWithErrorHandling({
+        method: "delete",
+        url: `${BASE_URL}/services/${id}`,
       })
       if (result !== null) {
         services.value = services.value.filter((s) => s._id !== id)
