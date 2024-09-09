@@ -5,6 +5,8 @@ import appRouter from "./routes"
 
 const app = express()
 
+app.use(express.json()) 
+
 // Enable CORS
 app.use(cors())
 
