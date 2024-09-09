@@ -7,7 +7,7 @@ import { useServices } from "@/composables/useServices"
 const props = defineProps<{
   _id: string
   title: string
-  description: string
+  content: string
 }>()
 
 const emit = defineEmits(["serviceUpdated", "serviceDeleted"])
@@ -17,7 +17,7 @@ const { updateService, deleteService } = useServices()
 const isModalOpen = ref(false)
 const modalTitle = ref("")
 const modalAction = ref<"edit" | "delete" | null>(null)
-const editForm = ref({ _id: props._id, title: props.title, description: props.description })
+const editForm = ref({ _id: props._id, title: props.title, content: props.content })
 
 const openEditModal = () => {
   modalTitle.value = "Edit Service"
@@ -39,9 +39,17 @@ const closeModal = () => {
 const handleEdit = async () => {
   if (modalAction.value === "edit") {
     try {
-      const updatedService = await updateService(props._id, editForm.value)
-      emit("serviceUpdated", updatedService)
-      closeModal()
+      const updatedService = await updateService(props._id, {
+        _id: props._id,
+        title: editForm.value.title,
+        content: editForm.value.content,
+      })
+      if (updatedService) {
+        emit("serviceUpdated", updatedService)
+        closeModal()
+      } else {
+        throw new Error("Failed to update service")
+      }
     } catch (error) {
       console.error("Failed to update service:", error)
       // Show an error message to the user
@@ -76,7 +84,7 @@ const handleDelete = async () => {
     <!-- Content -->
     <div class="mt-5 text-center">
       <h3 class="text-lg font-medium text-gray-800">{{ title }}</h3>
-      <p class="mt-2 text-gray-500">{{ description }}</p>
+      <p class="mt-2 text-gray-500">{{ content }}</p>
     </div>
     <!-- Buttons -->
     <div class="flex justify-between mt-5">
@@ -100,7 +108,7 @@ const handleDelete = async () => {
             <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
             <textarea
               id="description"
-              v-model="editForm.description"
+              v-model="editForm.content"
               rows="3"
               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             ></textarea>

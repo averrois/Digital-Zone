@@ -33,7 +33,7 @@ const handleServiceDeleted = (deletedServiceId: string) => {
         :key="service._id"
         :_id="service._id"
         :title="service.title"
-        :description="service.description"
+        :content="service.content"
         @service-updated="handleServiceUpdated"
         @service-deleted="handleServiceDeleted"
       />

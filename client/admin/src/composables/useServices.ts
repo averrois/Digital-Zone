@@ -79,14 +79,14 @@ export function useServices(): UseServicesReturn {
     }
   }
 
-  const updateService = async (id: string, service: ServiceType): Promise<ServiceType | null> => {
+  const updateService = async (id: string, service: Partial<ServiceType>): Promise<ServiceType | null> => {
     loading.value = true
     error.value = null
     try {
       const updatedService = await axiosWithErrorHandling<ServiceType>({
         method: "put",
         url: `${BASE_URL}/services/${id}`,
-        data: service,
+        body: service,
       })
       if (updatedService) {
         const index = services.value.findIndex((s) => s._id === id)
