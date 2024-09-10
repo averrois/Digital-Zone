@@ -26,16 +26,7 @@ serviceRoutes.post("/", async (req, res, next) => {
   }
 })
 
-// PUT (update) a service
-// serviceRoutes.put('/:id', async (req, res, next) => {
-//   const updatedService = await serviceController.updateService(req.params.id, req.body);
-//   if (updatedService) {
-//     console.log("Service Get Updated!", req.body)
-//     return res.status(200).json(updatedService);
-//   } else {
-//     res.status(404).json({ message: 'Service not found or update failed' });
-//   }
-// });
+// PUT UPDATEI a service
 serviceRoutes.put("/:id", async (req, res, next) => {
   try {
     const updatedService = await serviceController.updateService(req.params.id, req.body)
