@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue"
 
 const props = defineProps({
   isClose: {
@@ -10,36 +10,36 @@ const props = defineProps({
     type: String,
     required: true,
   },
-});
+})
 
-const emit = defineEmits(["close"]);
-const modalRef = ref(null);
+const emit = defineEmits(["close"])
+const modalRef = ref(null)
 
 function closeModal() {
-  emit("close");
+  emit("close")
 }
 
 function handleKeyDown(event: KeyboardEvent) {
   if (event.key === "Escape" && !props.isClose) {
-    closeModal();
+    closeModal()
   }
 }
 
-const outSideClick = () => console.log("its clicked");
+const outSideClick = () => console.log("its clicked")
 
 onMounted(() => {
-  window.addEventListener("keydown", handleKeyDown);
-});
+  window.addEventListener("keydown", handleKeyDown)
+})
 
 onUnmounted(() => {
-  window.removeEventListener("keydown", handleKeyDown);
-});
+  window.removeEventListener("keydown", handleKeyDown)
+})
 </script>
 
 <template>
   <div v-if="!isClose" class="absolute w-full h-full z-[600] left-0 top-0 flex justify-center items-center">
-    <div  class="blur_bg"></div>
-    <div  @click.self="closeModal" class="fixed inset-0 flex items-center justify-center z-[600] m-6" :class="{ hidden: isClose }">
+    <div class="blur_bg"></div>
+    <div @click.self="closeModal" class="fixed inset-0 flex items-center justify-center z-[600] m-6" :class="{ hidden: isClose }">
       <div class="bg-white border-grey-200 border-2 rounded shadow-lg p-6 w-full max-w-5xl mx-auto">
         <div class="flex justify-between items-center">
           <h2 class="text-primary-50 text-2xl font-bold">{{ title }}</h2>
