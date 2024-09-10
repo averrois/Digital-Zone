@@ -44,6 +44,7 @@ const handleEdit = async () => {
         title: editForm.value.title,
         content: editForm.value.content,
       })
+      console.log("This service props:", props._id, editForm.value.title, editForm.value.content)
       if (updatedService) {
         emit("serviceUpdated", updatedService)
         closeModal()

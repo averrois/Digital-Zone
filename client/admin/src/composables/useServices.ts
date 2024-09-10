@@ -86,8 +86,9 @@ export function useServices(): UseServicesReturn {
       const updatedService = await axiosWithErrorHandling<ServiceType>({
         method: "put",
         url: `${BASE_URL}/services/${id}`,
-        body: service,
+        data: service,
       })
+      console.log("This is new Service data:", service)
       if (updatedService) {
         const index = services.value.findIndex((s) => s._id === id)
         if (index !== -1) services.value[index] = updatedService
