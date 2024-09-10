@@ -10,7 +10,7 @@ interface UseServicesReturn {
   error: Ref<string | null>
   loading: Ref<boolean>
   getServices: () => Promise<void>
-  getServiceById: (id: string) => Promise<ServiceType | null>
+  // getServiceById: (id: string) => Promise<ServiceType | null>
   createService: (service: Omit<ServiceType, "_id">) => Promise<ServiceType | null>
   updateService: (id: string, service: ServiceType) => Promise<ServiceType | null>
   deleteService: (id: string) => Promise<boolean>
@@ -50,18 +50,18 @@ export function useServices(): UseServicesReturn {
     }
   }
 
-  const getServiceById = async (id: string): Promise<ServiceType | null> => {
-    loading.value = true
-    error.value = null
-    try {
-      return await axiosWithErrorHandling<ServiceType>({
-        method: "get",
-        url: `${BASE_URL}/services/${id}`,
-      })
-    } finally {
-      loading.value = false
-    }
-  }
+  // const getServiceById = async (id: string): Promise<ServiceType | null> => {
+  //   loading.value = true
+  //   error.value = null
+  //   try {
+  //     return await axiosWithErrorHandling<ServiceType>({
+  //       method: "get",
+  //       url: `${BASE_URL}/services/${id}`,
+  //     })
+  //   } finally {
+  //     loading.value = false
+  //   }
+  // }
 
   const createService = async (service: Omit<ServiceType, "_id">): Promise<ServiceType | null> => {
     loading.value = true
@@ -122,7 +122,7 @@ export function useServices(): UseServicesReturn {
     error,
     loading,
     getServices,
-    getServiceById,
+    // getServiceById,
     createService,
     updateService,
     deleteService,

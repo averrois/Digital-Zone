@@ -7,14 +7,14 @@ const serviceRoutes = Router();
 serviceRoutes.get('/', serviceController.getServices);
 
 // GET a single service by ID
-serviceRoutes.get('/:id', async (req, res, next) => {
-  const service = await serviceController.getServiceById(req.params.id);
-  if (service) {
-    res.json(service);
-  } else {
-    res.status(404).json({ message: 'Service not found' });
-  }
-});
+// serviceRoutes.get('/:id', async (req, res, next) => {
+//   const service = await serviceController.getServiceById(req.params.id);
+//   if (service) {
+//     res.json(service);
+//   } else {
+//     res.status(404).json({ message: 'Service not found' });
+//   }
+// });
 
 // POST a new service
 serviceRoutes.post('/', async (req, res, next) => {
